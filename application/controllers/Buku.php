@@ -215,6 +215,36 @@ $this->ModelBuku->simpanKategori($data);
 redirect('buku/kategori');
 }
 }
+
+public function ubahkategori()
+ {
+ $data['judul'] = 'Ubah Data Kategori';
+ $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
+ $data['kategori'] = $this->ModelBuku->kategoriWhere(['id' => $this->uri->segment(3)])->result_array();
+ 
+ $this->form_validation->set_rules('kategori', 'Nama Kategori', 'required', [
+ 'required' => 'Nama Kategori harus diisi'
+ ]);
+ if ($this->form_validation->run() == false) {
+ $this->load->view('templates/header', $data);
+ $this->load->view('templates/sidebar', $data);
+ $this->load->view('templates/topbar', $data);
+ $this->load->view('buku/ubah_kategori', $data);
+ $this->load->view('templates/footer');
+ } else {
+ $data = array ( 
+    'kategori' => $this->input->post('kategori')
+ );
+ 
+ $where = array ( 
+    'id' => $this->input->post('id')
+ );
+
+$this->ModelBuku->updateKategori($where, $data);
+redirect('buku/kategori');
+}
+}
+
 public function hapusKategori()
 {
 $where = ['id' => $this->uri->segment(3)];
