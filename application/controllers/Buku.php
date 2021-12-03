@@ -89,6 +89,7 @@ true),
 'image' => $gambar
 ];
 $this->ModelBuku->simpanBuku($data);
+$this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Buku Berhasil Di Simpan!!</div>');
 redirect('buku');
 }
 }
@@ -189,6 +190,7 @@ true),
  {
  $where = ['id' => $this->uri->segment(3)];
  $this->ModelBuku->hapusBuku($where);
+ $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Data Buku Berhasil Di Hapus!!</div>');
  redirect('buku');
  }
  
